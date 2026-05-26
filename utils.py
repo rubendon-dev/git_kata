@@ -1,9 +1,20 @@
 import pandas as pd
 
 def load_data():
-    # Replace the path below with the actual location of your titanic.csv file
     df = pd.read_csv('/Users/rubendonkers/Documents/HWR/Git_exercise/git_kata/data/titanic.csv')
-    df = df[df['sex'] == 'male']  # This is the change
+    df = df[df['sex'] == 'male']
     return df
 
-print()
+def clean_data(df):
+    """
+    Cleans the Titanic DataFrame by dropping rows with missing values
+    and converting all categorical columns to lowercase.
+    """
+    # Drop rows with missing values
+    df = df.dropna()
+    
+    # Convert all categorical (object) columns to lowercase
+    for col in df.select_dtypes(include=['object']).columns:
+        df[col] = df[col].astype(str).str.lower()
+        
+    return df
